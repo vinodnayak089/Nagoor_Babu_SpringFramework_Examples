@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+
+    <bean id="courseBean1" class="com.durgasoft.beans.Course" autowire-candidate="false">
+         <property name="cname" value="java"></property>
+         <property name="ccost" value="10000"></property>
+    </bean>
+    <bean id="courseBean2" class="com.durgasoft.beans.Course">
+         <property name="cname" value="python"></property>
+         <property name="ccost" value="20000"></property>
+    </bean>
+    <bean id="studentBean" class="com.durgasoft.beans.Student" autowire="byType">
+         <property name="sid" value="1"></property>
+         <property name="sname" value="vinod"></property>
+         <property name="saddr" value="alwal"></property>
+         <property name="course" ref="courseBean1"></property>
+    </bean>
+</beans>
