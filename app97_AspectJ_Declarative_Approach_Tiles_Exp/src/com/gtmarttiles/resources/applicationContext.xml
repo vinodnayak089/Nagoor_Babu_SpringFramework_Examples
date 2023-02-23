@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="quantityBean" class="com.gtmarttiles.dto.Quantity">
+		<property name="l" value="100"></property>
+		<property name="hl" value="700"></property>
+		<property name="d" value="100"></property>
+		<property name="f" value="100"></property>
+	</bean>
+	<bean id="tilesBean" class="com.gtmarttiles.dto.Tiles">
+		<property name="boxSize" value="12X1823"></property>
+		<property name="designNo" value="656"></property>
+		<property name="quantity" ref="quantityBean"></property>
+		<property name="prize" value="250"></property>
+		<property name="email" value="vinod@marttiles.com"></property>
+		<property name="mobileNum" value="91-88011"></property>
+	</bean>
+
+	<!-- Target -->
+	<bean id="tilesService"
+		class="com.gtmarttiles.service.TilesServiceImpl" />
+
+	<!-- Aspect -->
+	<bean id="tilesAdviceBean"
+		class="com.gtmarttiles.advice.TilesAdvice" />
+
+	<aop:config>
+		<aop:aspect id="tilesAdvice" ref="tilesAdviceBean">
+			<aop:pointcut
+				expression="execution(* com.gtmarttiles.service.TilesService.*(..))"
+				id="tilespointcut" />
+			<aop:before method="before" pointcut-ref="tilespointcut" />
+			<aop:after method="after" pointcut-ref="tilespointcut" />
+			<aop:after-returning method="afterReturing"
+				pointcut-ref="tilespointcut" returning="results" />
+			<aop:around method="around" pointcut-ref="tilespointcut" />
+			<aop:after-throwing method="afterThrow"
+				throwing="t" pointcut-ref="tilespointcut" />
+		</aop:aspect>
+	</aop:config>
+
+
+</beans>

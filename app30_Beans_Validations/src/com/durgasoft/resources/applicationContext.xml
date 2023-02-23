@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> <!-- bean definitions here -->
+
+	<bean id="userBean" class="com.durgasoft.beans.User">
+		<property name="id" value="1"></property>
+		<property name="name" value="vinod"></property>
+		<property name="email" value=""></property>
+		<property name="age" value="26"></property>
+	</bean>
+	<bean id="userValidations"
+		class="com.durgasoft.validations.UserValidations" >
+		<property name="resource" value="/com/durgasoft/resources/ErrorMessage.properties"></property>
+		</bean>
+</beans>

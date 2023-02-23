@@ -1,0 +1,100 @@
+select *from tiles;
+
+create or replace procedure getPrize(designNo IN STRING, tilesprize OUT number)
+AS
+BEGIN
+select prize into tilesprize from tiles where design_no=designNo;
+END getPrize;
+/
+
+DROP procedure getPrize;
+
+create or replace function getAvgPrize(designNo1 IN STRING, designNo2 IN STRING) return float
+     AS
+     prize1 number;
+     prize2 number;
+     BEGIN
+     select prize into prize1 from tiles where design_no=designNo1; 
+     select prize into prize2 from tiles where design_no=designNo2;
+     return (prize1+prize2)/2;
+     END getAvgPrize;
+     /
+     
+     create or replace procedure getTiles(designNo IN string, outTiles OUT SYS_REFCURSOR)
+ AS
+ BEGIN
+   open outTiles for select *from tiles where design_no < designNo;
+   END getTiles;
+   /
+   
+   create or replace function getTiles(designNo IN string)return SYS_REFCURSOR
+ AS
+ tilesList SYS_REFCURSOR;
+ BEGIN
+   open tilesList for select *from tiles where design_no < designNo;
+   return tilesList;
+   END getTiles;
+ /
+ 
+ select * from tiles;
+
+clear scr;
+
+create or replace function getTilesList(designNo IN string) return SYS_REFCURSOR
+ AS
+ tilesList SYS_REFCURSOR;
+ BEGIN
+   open tilesList for select * from tiles where design_no < designNo;
+   return tilesList;
+   END getTilesList;
+ /
+ 
+select * from tiles;
+
+clear scr;
+
+create or replace function getTilesList(designNo IN string) return SYS_REFCURSOR
+ AS
+ tilesList SYS_REFCURSOR;
+ BEGIN
+   open tilesList for select * from tiles where design_no < designNo;
+   return tilesList;
+   END getTilesList;
+ /
+ 
+create or replace procedure createTiles(boxSize IN varchar, designNo IN varchar, l IN number, hl IN number, d IN number, f IN number, prize IN number)
+AS
+BEGIN
+insert into  tiles values (boxSize,designNo,l,hl,d,f,prize);
+END createTiles;
+/
+
+create or replace procedure getTile(designNo IN STRING, outputTile OUT SYS_REFCURSOR)
+AS
+BEGIN
+open outputTile for select * from tiles where design_no=designNo;
+END getTile;
+/
+
+drop PROCEDURE updateTiles;
+
+create or replace procedure updateTiles(boxSize1 IN varchar, designNo1 IN varchar, l1 IN number, hl1 IN number, d1 IN number, f1 IN number, prize1 IN number)
+AS
+BEGIN
+update tiles set box_size=boxSize1, l=l1, hl=hl1, d=d1, f=f1, prize=prize1 where design_no = designNo1;
+END updateTiles;
+/
+
+create or replace procedure deleteTile(designNo IN STRING)
+AS
+BEGIN
+delete tiles where design_no=designNo;
+END deleteTile;
+/
+
+create or replace procedure getAllTiles(outputTile OUT SYS_REFCURSOR)
+AS
+BEGIN
+open outputTile for select * from tiles;
+END getAllTiles;
+/

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd" >
+    
+    <bean id="accountBean" class="com.gtmarttiles.dto.Account">
+    <property name="name" value="vinod"></property>
+    <property name="account" value="500010643011"></property>
+    <property name="balance" value="50000"></property>
+    </bean>
+    
+    <bean id="chequeBean" class="com.gtmarttiles.dto.Cheque">
+    <property name="chequeNo" value="123ChequeNo"></property>
+    <property name="amount" value="20000"></property>
+    </bean>
+    
+    <!-- Target -->
+    <bean id="tilesService" class="com.gtmarttiles.service.TilesServiceImpl"/>
+   
+    <!-- Advice -->
+    <bean id="tilesThrowsAdvice" class="com.gtmarttiles.advice.ChequeClearanceAdvice"/>
+   
+    <!-- 
+    <bean id="pointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+    <property name="mappedNames">
+      <array>
+          <value>getTilesDetails</value>
+      </array>
+    </property>
+    </bean>
+    
+    <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+      <property name="pointcut" ref="pointcut"/>
+      <property name="advice" ref="tilesThrowsAdvice"/>
+    </bean>
+    
+     -->
+    
+    <!-- Proxy Object -->
+    <bean id="tilesProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+       <property name="target" ref="tilesService"></property>
+       <property name="interceptorNames">
+          <list>
+             <value>tilesThrowsAdvice</value>
+          </list>
+       </property>
+    </bean>
+   
+    
+    
+</beans>

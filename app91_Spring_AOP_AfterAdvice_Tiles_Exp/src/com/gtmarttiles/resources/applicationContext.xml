@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd" >
+    
+    <bean id="quantityBean" class="com.gtmarttiles.dto.Quantity">
+    <property name="l" value="100"></property>
+    <property name="hl" value="100"></property>
+    <property name="d" value="100"></property>
+    <property name="f" value="100"></property>
+    </bean>
+    
+    <bean id="tilesBean" class="com.gtmarttiles.dto.Tiles">
+    <property name="boxSize" value="12X18"></property>
+    <property name="designNo" value="656"></property>
+    <property name="quantity" ref="quantityBean"></property>
+    <property name="prize" value="250"></property>
+    <property name="email" value="vinod@marttiles.com"></property>
+    <property name="mobileNum" value="91-88011"></property>
+    </bean>
+    
+    <!-- Target -->
+    <bean id="tilesService" class="com.gtmarttiles.service.TilesServiceImpl"/>
+   
+    <!-- Advice -->
+    <bean id="thankyouAdvice" class="com.gtmarttiles.advice.ThankyouAdvice"/>
+    
+    <!-- point cut -->
+    <bean id="pointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+    <property name="mappedNames">
+      <array>
+          <value>getTilesDetails</value>
+          <value>displayTilesDetails</value>
+      </array>
+    </property>
+    </bean>
+    
+    <!-- Advisor -->
+    <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+      <property name="pointcut" ref="pointcut"/>
+      <property name="advice" ref="thankyouAdvice"/>
+    </bean>
+    
+    <!-- Proxy Object -->
+    <bean id="tilesProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+       <property name="target" ref="tilesService"></property>
+       <property name="interceptorNames">
+          <list>
+             <value>advisor</value>
+          </list>
+       </property>
+    </bean>
+   
+    
+    
+</beans>

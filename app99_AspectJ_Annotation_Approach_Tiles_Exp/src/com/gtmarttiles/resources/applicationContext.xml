@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <bean id="quantityBean" class="com.gtmarttiles.dto.Quantity">
+    <property name="l" value="100"></property>
+    <property name="hl" value="700"></property>
+    <property name="d" value="100"></property>
+    <property name="f" value="100"></property>
+    </bean>
+    <bean id="tilesBean" class="com.gtmarttiles.dto.Tiles">
+    <property name="boxSize" value="12X1823"></property>
+    <property name="designNo" value="undecided"></property>
+    <property name="quantity" ref="quantityBean"></property>
+    <property name="prize" value="250"></property>
+    <property name="email" value="vinod@marttiles.com"></property>
+    <property name="mobileNum" value="91-88011"></property>
+    </bean>
+    
+    <context:annotation-config/>
+    <context:component-scan base-package="com.gtmarttiles"/>
+    <aop:aspectj-autoproxy/>
+    
+</beans>
